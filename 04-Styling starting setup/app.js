@@ -17,17 +17,17 @@ const app = Vue.createApp({
     methods: {
         boxSelected(box){
             if (box == 'A'){
-                this.boxASelected = !this.boxASelected
-                this.boxBSelected = false
-                this.boxCSelected = false
+                this.boxASelected = !this.boxASelected;
+                this.boxBSelected = false;
+                this.boxCSelected = false;
             } else if(box == 'B'){
-                this.boxBSelected = !this.boxBSelected
-                this.boxASelected = false
-                this.boxCSelected = false
+                this.boxBSelected = !this.boxBSelected;
+                this.boxASelected = false;
+                this.boxCSelected = false;
             }else{
-                this.boxCSelected = !this.boxCSelected
-                this.boxASelected = false
-                this.boxBSelected = false
+                this.boxCSelected = !this.boxCSelected;
+                this.boxASelected = false;
+                this.boxBSelected = false;
             }
         }
     },

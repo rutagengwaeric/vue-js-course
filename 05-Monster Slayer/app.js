@@ -45,6 +45,7 @@ const app = Vue.createApp({
                 this.winner = 'monster'
             }
         },
+
         monsterHealth(value){
             if(value <= 0 && this.playerHealth <= 0){
                 // Draw
