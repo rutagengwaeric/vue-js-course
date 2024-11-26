@@ -3,8 +3,10 @@
   <header>
     <h1>FriendList</h1>
   </header>
+  <new-friend @add-friend="addFriend"></new-friend>
     <ul>
-       <friend-contact  v-for="friend in friends" :key=friend.id :friend="friend">
+       <friend-contact  v-for="friend in friends" :key=friend.id :friend="friend" 
+       @toggle-favorite="toggleFavorite" @delete-friend="deleteFriend">
       </friend-contact>
     </ul>
   </section>
@@ -12,8 +14,9 @@
 
 <script>
 import FriendContact from './components/FriendContact.vue';
+import NewFriend from './components/NewFriend.vue';
 export default {
-  components: { FriendContact },
+  components: { FriendContact, NewFriend },
   data() {
     return {
       friends: [
@@ -22,21 +25,40 @@ export default {
           name: "Manuel Lorenz",
           phone: "0123 456 7890",
           email: "manu@localhost",
+          favorite: true,
         },
         {
           id: "julie",
           name: "Julie Jones",
           phone: "0987 654 3210",
           email: "julie@localhost",
-        },
-        {
-          id: "julie",
-          name: "Julie Jones",
-          phone: "0987 654 3210",
-          email: "julie@localhost",
+          favorite: false,
         },
       ],
     };
+  },
+  methods: {
+    toggleFavorite(friendId) {
+        const identifiedFriend = this.friends.find((friend) => friend.id == friendId);
+        identifiedFriend.favorite = !identifiedFriend.favorite;
+        // console.log(identifiedFriend);
+    },
+
+
+    addFriend(name, phone, email) {
+      const newFriend = {
+        id: new Date().toISOString(),
+        name: name,
+        phone: phone,
+        email: email,
+        favorite: false,
+      };
+      this.friends.push(newFriend);
+    },
+    // Delete Friend
+    deleteFriend(friendId) {
+      this.friends = this.friends.filter((friend) => friend.id !== friendId);
+    },
   },
 };
 </script>
@@ -73,7 +95,8 @@ header {
   list-style: none;
 }
 
-#app li {
+#app li,
+#app form {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 1rem auto;
   border-radius: 10px;
@@ -98,6 +121,7 @@ header {
   color: white;
   padding: 0.05rem 1rem;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
+  margin-right: .5rem;
 }
 
 #app button:hover,
@@ -110,4 +134,25 @@ header {
 .hide {
   display: none;
 }
+
+#app input {
+  font: inherit;
+  padding: 0.15rem;
+  border: 1px solid #ccc;
+  margin-right: 1rem;
+
+}
+
+#app label {
+  font-weight: bold;
+  margin-right: 1rem;
+  width: 7rem;
+  display: inline-block;
+}
+
+#app form div {
+  margin: 1rem 0;
+
+}
+
 </style>
