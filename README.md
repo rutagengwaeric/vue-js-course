@@ -1,1 +1,1 @@
-<h3>Vue js Concepts </h3>
+<h3>Vue js Concepts to consider </h3>
