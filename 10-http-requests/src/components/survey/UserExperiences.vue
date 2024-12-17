@@ -39,7 +39,7 @@ export default {
   methods: {
     loadData(){
       this.isLoading = true;
-      fetch("https://vue-test-e2e74-default-rtdb.firebaseio.com/")
+      fetch("https://vue-test-e2e74-default-rtdb.firebaseio.com/surveys.json")
       .then((response)=>{
          if (response.ok) {
             return response.json()
