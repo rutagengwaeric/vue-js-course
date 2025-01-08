@@ -2,12 +2,7 @@
   <section>
     <h2>{{ teamName }}</h2>
     <ul>
-      <user-item
-        v-for="member in members"
-        :key="member.id"
-        :name="member.fullName"
-        :role="member.role"
-      ></user-item>
+      <user-item v-for="member in members" :key="member.id" :name="member.fullName" :role="member.role"></user-item>
     </ul>
   </section>
 </template>
@@ -16,7 +11,8 @@
 import UserItem from '../users/UserItem.vue';
 
 export default {
-  inject : ['users', 'teams'],
+  inject: ['users', 'teams'],
+  props: ['teamId'],
   components: {
     UserItem
   },
@@ -26,21 +22,30 @@ export default {
       members: [],
     };
   },
-  created() {
-    const teamId = this.$route.params.teamId;
-    const selectedTeam = this.teams.find(team => team.id == teamId);
-    const selectedUsers = [];
-    const members = selectedTeam.members
-    for (const member of members){
-      const selectedMember = this.users.find(user => user.id == member);
-       selectedUsers.push(selectedMember);
+  methods: {
+    loadTeamMembers(teamId) {
+      // const teamId = teamId;
+      const selectedTeam = this.teams.find(team => team.id == teamId);
+      const selectedUsers = [];
+      const members = selectedTeam.members
+      for (const member of members) {
+        const selectedMember = this.users.find(user => user.id == member);
+        selectedUsers.push(selectedMember);
+      }
+      this.teamName = selectedTeam.name;
+      this.members = selectedUsers;
+
+
     }
-    this.teamName = selectedTeam.name;
-    this.members = selectedUsers;
-
-
-
   },
+  created() {
+    this.loadTeamMembers(this.teamId);
+  },
+  watch: {
+    teamId(id) {
+      this.loadTeamMembers(id);
+    }
+  }
 };
 </script>
 
